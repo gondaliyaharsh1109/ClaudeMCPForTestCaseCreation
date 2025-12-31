@@ -208,7 +208,7 @@ IMPORTANT: Extract the ticket number from the user story and use it directly.
    - 3. Tap on Profile icon in the bottom navigation bar
    - 4. Tap Edit Profile button and update information (First Name: John, Last Name: Doe)
    - 5. Tap Save button and verify success message appears
-
+//added comment
    Example of GOOD industry-standard steps (BOTH):
    - 1. Open browser and navigate to application URL (https://app.example.com) OR Open application mobile app on the device
    - 2. On login page/screen, enter valid credentials (Email: test@example.com, Password: Test@123)
