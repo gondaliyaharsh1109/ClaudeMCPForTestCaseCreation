@@ -10,7 +10,7 @@ dotenv.config();
 
 /* ------------------ CONFIGURATION ------------------ */
 // 🔥 CHANGE TABLE NAME HERE - This will update everywhere in the code
-const TABLE_NAME = process.env.DB_TABLE_NAME || "instagram_stories";
+const TABLE_NAME = process.env.DB_TABLE_NAME || "event_management_stories";
 
 /* ------------------ MYSQL CONNECTION ------------------ */
 const pool = mysql.createPool({
@@ -50,7 +50,7 @@ const APP_TYPE_DETECTION_GUIDE = `
    Keywords to look for: "website", "web app", "browser", "URL", "webpage", "web portal"
 
    Test Steps Format:
-   "1. Open browser and navigate to [App Name] login page (https://example.com/login)
+   "1. Open browser and navigate to [App Name] login page 
     2. On the login page, enter credentials..."
 
 2. MOBILE APPLICATION ONLY
@@ -65,7 +65,7 @@ const APP_TYPE_DETECTION_GUIDE = `
    OR if story mentions features that work on both platforms
 
    Test Steps Format (provide both variations):
-   "1. Open browser and navigate to [App Name] login page (https://example.com/login) OR Open [App Name] mobile app on the device
+   "1. Open browser and navigate to [App Name] login page OR Open [App Name] mobile app on the device
     2. On the login page/screen, enter credentials..."
 
 4. DESKTOP APPLICATION
@@ -87,28 +87,6 @@ PRIORITY ORDER (check in this sequence):
    - Features like "push notifications", "camera access" → Mobile or Both
    - General features without platform-specific hints → Assume Both (safer approach)
 
-EXAMPLES OF APPLICATION TYPE DETECTION:
-
-Example 1 - WEB ONLY:
-User Story: "As a user, I want to login to the Instagram website using my email..."
-Detection: WEB APPLICATION
-First Step: "1. Open browser and navigate to Instagram login page (https://instagram.com/login)"
-
-Example 2 - MOBILE ONLY:
-User Story: "As a mobile user, I want to login to the Instagram app on my phone..."
-Detection: MOBILE APPLICATION
-First Step: "1. Open Instagram mobile app on the device"
-
-Example 3 - BOTH PLATFORMS:
-User Story: "As a user, I want to login to Instagram from web or mobile app..."
-Detection: BOTH WEB AND MOBILE
-First Step: "1. Open browser and navigate to Instagram login page (https://instagram.com/login) OR Open Instagram mobile app on the device"
-
-Example 4 - NO EXPLICIT MENTION (assume both):
-User Story: "As a user, I want to view my Instagram profile and edit my bio..."
-Detection: BOTH WEB AND MOBILE (default when unclear)
-First Step: "1. Open browser and navigate to Instagram (https://instagram.com) OR Open Instagram mobile app on the device"
-
 ═══════════════════════════════════════════════════════════════════════════════
                          APPLICATION TYPE STEP VARIATIONS
 ═══════════════════════════════════════════════════════════════════════════════
@@ -119,14 +97,14 @@ First Step: "1. Open browser and navigate to Instagram (https://instagram.com) O
 - "Open the [App Name] application on your iOS/Android device"
 
 🌐 WEB APP VARIATIONS:
-- "Open browser and navigate to [App Name] login page (https://example.com/login)"
-- "Open a web browser and go to [URL]"
-- "Navigate to [App Name] website at [URL]"
+- "Open browser and navigate to [App Name] login page"
+- "Open a web browser and go to [App URL]"
+- "Navigate to [App Name] website"
 
 🔄 BOTH PLATFORMS:
-- "Open browser and navigate to [URL] OR Open [App Name] mobile app on the device"
-- "Access [App Name] via web browser at [URL] or mobile app"
-- "Launch [App Name] (web: [URL] / mobile: app on device)"
+- "Open browser and navigate to [App URL] OR Open [App Name] mobile app on the device"
+- "Access [App Name] via web browser or mobile app"
+- "Launch [App Name] (web/mobile)"
 
 💻 DESKTOP APP:
 - "Launch [App Name] desktop application"
@@ -168,7 +146,7 @@ ${APP_TYPE_DETECTION_GUIDE}
 📋 MANDATORY OUTPUT FORMAT: CSV
 
 Generate test cases in CSV format with the following columns:
-"Test Case ID","Test Case Title","Priority","Test Type","Preconditions","Test Data","Test Steps","Expected Result"
+"Test Case ID","Test Case Title","Priority","Test Type","Preconditions","Test Steps","Expected Result"
 
 ═══════════════════════════════════════════════════════════════════════════════
                           TEST CASE ID FORMAT (MANDATORY)
@@ -196,24 +174,24 @@ IMPORTANT: Extract the ticket number from the user story and use it directly.
    ❌ Avoid: 20-30 atomic steps (too granular: "Click button", "Enter text")
 
    Example of GOOD industry-standard steps (WEB):
-   - 1. Open browser and navigate to application login page (https://app.example.com/login)
-   - 2. Login with valid credentials (Email: test@example.com, Password: Test@123)
+   - 1. Open browser and navigate to application login page
+   - 2. Login with valid credentials
    - 3. Navigate to Profile section from the main menu
-   - 4. Update profile information (First Name: John, Last Name: Doe, Phone: 555-1234)
+   - 4. Update profile information
    - 5. Save changes and verify success message appears
 
    Example of GOOD industry-standard steps (MOBILE):
    - 1. Open application mobile app on the device
-   - 2. On login screen, enter valid credentials (Email: test@example.com, Password: Test@123)
+   - 2. On login screen, enter valid credentials
    - 3. Tap on Profile icon in the bottom navigation bar
-   - 4. Tap Edit Profile button and update information (First Name: John, Last Name: Doe)
+   - 4. Tap Edit Profile button and update information
    - 5. Tap Save button and verify success message appears
 
    Example of GOOD industry-standard steps (BOTH):
-   - 1. Open browser and navigate to application URL (https://app.example.com) OR Open application mobile app on the device
-   - 2. On login page/screen, enter valid credentials (Email: test@example.com, Password: Test@123)
+   - 1. Open browser and navigate to application URL OR Open application mobile app on the device
+   - 2. On login page/screen, enter valid credentials 
    - 3. Navigate to Profile section from the main menu/bottom navigation
-   - 4. Update profile information (First Name: John, Last Name: Doe, Phone: 555-1234)
+   - 4. Update profile information 
    - 5. Save changes and verify success message appears
 
    Example of BAD atomic steps:
@@ -244,18 +222,18 @@ IMPORTANT: Extract the ticket number from the user story and use it directly.
    Write clear, concise preconditions that set the starting state:
 
    ✅ CORRECT (WEB):
-   "- User account exists (Email: test@example.com, Password: Test@123)
-    - Application is accessible at https://app.example.com
+   "- User account exists with valid credentials
+    - Application is accessible via web browser
     - Browser: Chrome (latest version)"
 
    ✅ CORRECT (MOBILE):
-   "- User account exists (Email: test@example.com, Password: Test@123)
+   "- User account exists with valid credentials
     - Application is installed on the device (iOS/Android)
     - Device: Smartphone with internet connection"
 
    ✅ CORRECT (BOTH):
-   "- User account exists (Email: test@example.com, Password: Test@123)
-    - Application is accessible via web (https://app.example.com) or mobile app is installed
+   "- User account exists with valid credentials
+    - Application is accessible via web or mobile app is installed
     - Device: Web browser (Chrome/Safari) or Smartphone (iOS/Android)"
 
    ❌ WRONG (too vague):
@@ -276,78 +254,40 @@ IMPORTANT: Extract the ticket number from the user story and use it directly.
    "[N]. [Action description with specific details and test data]"
 
    Example (WEB):
-   "1. Open browser and navigate to application URL (https://app.example.com)
-    2. On login page, enter credentials (Email: test@example.com, Password: Test@123) and click 'Login' button
+   "1. Open browser and navigate to application URL 
+    2. On login page, enter credentials and click 'Login' button
     3. After successful login, click 'Profile' menu item in the navigation bar
     4. On Profile page, click 'Edit Profile' button to enable editing mode
-    5. Update the following fields: First Name='John', Last Name='Doe', Phone='555-1234', Address='123 Main St'
+    5. Update the required profile fields with valid data
     6. Click 'Save Changes' button at the bottom of the form
-    7. Verify that a success message 'Profile updated successfully' is displayed
+    7. Verify that a success message is displayed
     8. Verify that all updated fields display the new values correctly on the profile page"
 
    Example (MOBILE):
    "1. Open application mobile app on the device
-    2. On login screen, enter credentials (Email: test@example.com, Password: Test@123) and tap 'Login' button
+    2. On login screen, enter valid credentials and tap 'Login' button
     3. After successful login, tap 'Profile' icon in the bottom navigation bar
     4. On Profile screen, tap 'Edit Profile' button to enable editing mode
-    5. Update the following fields: First Name='John', Last Name='Doe', Phone='555-1234'
+    5. Update the required profile fields with valid data
     6. Tap 'Save Changes' button at the bottom of the screen
-    7. Verify that a success message 'Profile updated successfully' is displayed
+    7. Verify that a success message is displayed
     8. Verify that all updated fields display the new values correctly on the profile screen"
 
-6. TEST DATA FORMAT
-   Provide clear test data that can be used during execution:
-
-   Example:
-   "Email: test@example.com | Password: Test@123 | First Name: John | Last Name: Doe | Phone: 555-1234"
-
-7. EXPECTED RESULT FORMAT
+6. EXPECTED RESULT FORMAT
    Describe the overall expected outcome clearly:
 
    "- User successfully updates profile information
-    - Success message 'Profile updated successfully' is displayed
+    - Success message is displayed
     - Updated information is visible on the profile page
     - All fields show the newly entered values"
 
-8. CSV FORMAT SPECIFICATIONS
+7. CSV FORMAT SPECIFICATIONS
    - Use double quotes for all field values
    - Escape internal quotes by doubling them ("")
    - Use newline character within fields for multi-line content
    - Separate columns with commas
    - Include header row
    - Each test case = one CSV row
-
-═══════════════════════════════════════════════════════════════════════════════
-                              EXAMPLE CSV OUTPUT
-═══════════════════════════════════════════════════════════════════════════════
-
-"Test Case ID","Test Case Title","Test Type","Priority","Preconditions","Test Steps","Test Data","Expected Result"
-"101001","User Login with Valid Credentials","Functional","High","- User account exists (Email: test@example.com, Password: Test@123)
-- Application is accessible at https://app.example.com
-- Browser: Chrome (latest version)","1. Open browser and navigate to application login page (https://app.example.com/login)
-2. On the login page, enter valid email address (test@example.com) in the 'Email' field
-3. Enter valid password (Test@123) in the 'Password' field
-4. Click the 'Login' button to submit credentials
-5. Wait for authentication to complete and page to redirect
-6. Verify that user is redirected to the dashboard page
-7. Verify that user's name is displayed in the navigation bar
-8. Verify that logout option is available in the user menu","Email: test@example.com | Password: Test@123","- User successfully logs into the application
-- User is redirected to dashboard page
-- User's name appears in navigation bar
-- All dashboard elements are loaded correctly"
-"102001","Update User Profile Information","Functional","Medium","- User account exists (Email: test@example.com, Password: Test@123)
-- User is logged into the application
-- User is on the dashboard page","1. From the dashboard, click on 'Profile' or user avatar icon in the navigation menu
-2. On the Profile page, click 'Edit Profile' button to enable editing mode
-3. Update the following profile fields: First Name='John', Last Name='Doe', Phone='555-1234'
-4. Optionally update additional fields like Address='123 Main St', City='New York'
-5. Click 'Save Changes' button at the bottom of the profile form
-6. Verify that a success message 'Profile updated successfully' is displayed at the top
-7. Verify that all updated fields now display the new values on the profile page
-8. Navigate away and return to Profile to confirm changes persisted","Email: test@example.com | Password: Test@123 | First Name: John | Last Name: Doe | Phone: 555-1234 | Address: 123 Main St | City: New York","- Profile information is updated successfully
-- Success message is displayed
-- Updated values are visible on profile page
-- Changes persist after page refresh"
 
 ═══════════════════════════════════════════════════════════════════════════════
                               MANDATORY RULES SUMMARY
@@ -476,7 +416,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
           "PRECONDITION WRITING GUIDE:\n" +
           "✅ CORRECT (clear and concise):\n" +
           "  Preconditions:\n" +
-          "  - User account exists (Email: test@example.com, Password: Test@123)\n" +
+          "  - User account exists with valid credentials\n" +
           "  - User is logged into the application\n" +
           "  - User has at least one post in their feed\n\n" +
           "❌ WRONG (too vague):\n" +
